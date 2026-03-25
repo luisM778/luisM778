@@ -40,20 +40,8 @@ services:
     volumes:
       - chromadata:/chroma/chroma
 
-  # ---- Intelligence Layer ----
-  ollama:
-    image: ollama/ollama:latest
-    container_name: argus-ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollamadata:/root/.ollama
-    deploy:
-      resources:
-        reservations:
-          memory: 4G
-
   # ---- Application Layer ----
+  # NOTE: Ollama runs natively on the host (port 11434). No Docker container needed.
   argus-api:
     build: .
     container_name: argus-api
@@ -69,7 +57,7 @@ services:
       POSTGRES_PASSWORD: argus_secret_2024
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
       CHROMA_HOST: chromadb
       CHROMA_PORT: 8000
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
@@ -80,8 +68,6 @@ services:
       redis:
         condition: service_healthy
       chromadb:
-        condition: service_started
-      ollama:
         condition: service_started
     restart: unless-stopped
 
@@ -94,7 +80,7 @@ services:
       POSTGRES_HOST: postgres
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
       SHELL_SANDBOX: "true"
     depends_on:
       redis:
@@ -119,4 +105,3 @@ volumes:
   pgdata:
   redisdata:
   chromadata:
-  ollamadata:
