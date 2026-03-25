@@ -6,5 +6,5 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-EXPOSE 3000
+EXPOSE 4001
 CMD ["npm", "start"]

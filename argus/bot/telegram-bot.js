@@ -3,7 +3,7 @@ const { Telegraf } = require('telegraf');
 const axios = require('axios');
 const { logger } = require('../core/logger');
 
-const API_BASE = `http://localhost:${process.env.PORT || 3000}/api`;
+const API_BASE = `http://localhost:${process.env.PORT || 4000}/api`;
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
 bot.start((ctx) => {
@@ -107,7 +107,7 @@ bot.command('report', async (ctx) => {
 
 bot.command('status', async (ctx) => {
   try {
-    const healthRes = await axios.get(`http://localhost:${process.env.PORT || 3000}/health`);
+    const healthRes = await axios.get(`http://localhost:${process.env.PORT || 4000}/health`);
     ctx.reply(
       `✅ *ARGUS Status*\n\n` +
         `Service: ${healthRes.data.service}\n` +

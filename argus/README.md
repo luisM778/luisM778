@@ -61,12 +61,12 @@ docker exec argus-ollama ollama pull llama3.1
 docker exec argus-ollama ollama pull nomic-embed-text
 
 # 5. Verify
-curl http://localhost:3000/health
+curl http://localhost:4000/health
 ```
 
 Services will be available at:
-- **API**: http://localhost:3000
-- **Dashboard**: http://localhost:3001
+- **API**: http://localhost:4000
+- **Dashboard**: http://localhost:4001
 - **Ollama**: http://localhost:11434
 
 ## Local Development (without Docker)
@@ -122,7 +122,7 @@ npm run dashboard
 
 ### Research a market
 ```bash
-curl -X POST http://localhost:3000/api/agents/research/execute \
+curl -X POST http://localhost:4000/api/agents/research/execute \
   -H "Content-Type: application/json" \
   -d '{
     "action": "market_research",
@@ -132,7 +132,7 @@ curl -X POST http://localhost:3000/api/agents/research/execute \
 
 ### Get crypto market overview
 ```bash
-curl -X POST http://localhost:3000/api/agents/crypto/execute \
+curl -X POST http://localhost:4000/api/agents/crypto/execute \
   -H "Content-Type: application/json" \
   -d '{
     "action": "market_monitor",
@@ -142,7 +142,7 @@ curl -X POST http://localhost:3000/api/agents/crypto/execute \
 
 ### Submit a task to the queue
 ```bash
-curl -X POST http://localhost:3000/api/task \
+curl -X POST http://localhost:4000/api/task \
   -H "Content-Type: application/json" \
   -d '{
     "type": "research",
@@ -153,7 +153,7 @@ curl -X POST http://localhost:3000/api/task \
 
 ### Generate a daily report
 ```bash
-curl -X POST http://localhost:3000/api/agents/strategy/execute \
+curl -X POST http://localhost:4000/api/agents/strategy/execute \
   -H "Content-Type: application/json" \
   -d '{
     "action": "daily_briefing",
@@ -163,7 +163,7 @@ curl -X POST http://localhost:3000/api/agents/strategy/execute \
 
 ### Trigger the full autonomy loop
 ```bash
-curl -X POST http://localhost:3000/api/autonomy
+curl -X POST http://localhost:4000/api/autonomy
 ```
 
 ## Telegram Bot

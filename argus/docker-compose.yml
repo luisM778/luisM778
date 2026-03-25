@@ -58,10 +58,10 @@ services:
     build: .
     container_name: argus-api
     ports:
-      - "3000:3000"
+      - "4000:4000"
     environment:
       NODE_ENV: production
-      PORT: 3000
+      PORT: 4000
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
       POSTGRES_DB: argus
@@ -108,9 +108,10 @@ services:
       dockerfile: Dockerfile
     container_name: argus-dashboard
     ports:
-      - "3001:3000"
+      - "4001:4001"
     environment:
-      NEXT_PUBLIC_API_URL: http://argus-api:3000/api
+      NEXT_PUBLIC_API_URL: http://argus-api:4000/api
+      PORT: 4001
     depends_on:
       - argus-api
 
