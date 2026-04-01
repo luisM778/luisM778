@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARGUS Dashboard - Preview</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #0a0a0f;
+      color: #e0e0e0;
+    }
+    .container { max-width: 1400px; margin: 0 auto; padding: 32px; }
+
+    /* Header */
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+    h1 {
+      margin: 0; font-size: 32px;
+      background: linear-gradient(135deg, #7c8cf8, #6ee7b7);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .subtitle { margin: 4px 0 0; color: #888; font-size: 14px; }
+    .status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .status-dot.online { background: #22c55e; }
+    .status-dot.offline { background: #ef4444; }
+    .status-label { color: #888; font-size: 13px; margin-left: 8px; }
+
+    /* Task Input */
+    .task-form { display: flex; gap: 12px; margin-bottom: 32px; }
+    .task-input {
+      flex: 1; padding: 12px 16px; border-radius: 8px; border: 1px solid #2a2a4a;
+      background: #12121f; color: #e0e0e0; font-size: 14px; outline: none;
+    }
+    .task-input:focus { border-color: #7c8cf8; }
+    .task-btn {
+      padding: 12px 24px; border-radius: 8px; border: none;
+      background: linear-gradient(135deg, #7c8cf8, #6366f1); color: #fff;
+      font-weight: 600; cursor: pointer; font-size: 14px; transition: opacity 0.2s;
+    }
+    .task-btn:hover { opacity: 0.9; }
+
+    /* Grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px; }
+
+    /* Card */
+    .card {
+      background: #1a1a2e; border-radius: 12px; padding: 24px;
+      border: 1px solid #2a2a4a; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .card h3 {
+      margin: 0 0 16px 0; color: #7c8cf8; font-size: 14px;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+
+    /* Badge */
+    .badge {
+      color: #fff; padding: 2px 8px; border-radius: 4px;
+      font-size: 11px; font-weight: 600; display: inline-block;
+    }
+    .badge.completed { background: #22c55e; }
+    .badge.pending { background: #eab308; }
+    .badge.active { background: #3b82f6; }
+    .badge.error { background: #ef4444; }
+    .badge.new { background: #3b82f6; }
+
+    /* Agent row */
+    .agent-row { padding: 12px 0; border-bottom: 1px solid #2a2a4a; }
+    .agent-row:last-child { border-bottom: none; }
+    .agent-name { font-weight: 600; color: #e0e0e0; margin-bottom: 4px; }
+    .agent-desc { font-size: 13px; color: #888; }
+    .agent-caps { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+    .cap-tag { background: #1e1e3a; padding: 2px 8px; border-radius: 4px; font-size: 11px; color: #7c8cf8; }
+
+    /* Task row */
+    .task-row { padding: 10px 0; border-bottom: 1px solid #2a2a4a; }
+    .task-row:last-child { border-bottom: none; }
+    .task-header { display: flex; justify-content: space-between; align-items: center; }
+    .task-name { font-weight: 500; }
+    .task-meta { font-size: 12px; color: #666; margin-top: 4px; }
+
+    /* Opportunity row */
+    .opp-row { padding: 10px 0; border-bottom: 1px solid #2a2a4a; }
+    .opp-row:last-child { border-bottom: none; }
+    .opp-title { font-weight: 500; }
+    .opp-desc { font-size: 13px; color: #888; margin-top: 4px; }
+    .opp-meta { display: flex; gap: 12px; margin-top: 6px; font-size: 12px; align-items: center; }
+    .opp-potential { color: #22c55e; }
+    .opp-risk { color: #eab308; }
+
+    /* Stat grid */
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .stat-label { font-size: 12px; color: #888; }
+    .stat-value { font-size: 20px; font-weight: 700; }
+    .stat-value.online { color: #22c55e; }
+    .stat-value.agents { color: #7c8cf8; }
+    .stat-value.tasks { color: #6ee7b7; }
+    .stat-value.opps { color: #eab308; }
+
+    .empty { color: #666; }
+
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <header>
+      <div>
+        <h1>ARGUS</h1>
+        <p class="subtitle">Autonomous Business Intelligence Assistant</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="status-dot online"></span>
+        <span class="status-label">System Online</span>
+      </div>
+    </header>
+
+    <!-- Task Input -->
+    <form class="task-form" onsubmit="return false">
+      <input class="task-input" type="text" placeholder="Submit a task (e.g., 'Research AI trends in Latin America')">
+      <button class="task-btn">Submit Task</button>
+    </form>
+
+    <!-- Grid -->
+    <div class="grid">
+
+      <!-- Active Agents -->
+      <div class="card">
+        <h3>Active Agents</h3>
+
+        <div class="agent-row">
+          <div class="agent-name">ResearchAgent</div>
+          <div class="agent-desc">Investigates business opportunities, market trends, and competitive intelligence</div>
+          <div class="agent-caps">
+            <span class="cap-tag">web_research</span>
+            <span class="cap-tag">trend_analysis</span>
+            <span class="cap-tag">competitor_analysis</span>
+            <span class="cap-tag">opportunity_discovery</span>
+          </div>
+        </div>
+
+        <div class="agent-row">
+          <div class="agent-name">SupplierAgent</div>
+          <div class="agent-desc">Manages supplier relationships, sourcing, and supply chain intelligence</div>
+          <div class="agent-caps">
+            <span class="cap-tag">supplier_search</span>
+            <span class="cap-tag">price_comparison</span>
+            <span class="cap-tag">vendor_evaluation</span>
+          </div>
+        </div>
+
+        <div class="agent-row">
+          <div class="agent-name">SalesAgent</div>
+          <div class="agent-desc">Monitors sales performance, identifies leads, and forecasts revenue</div>
+          <div class="agent-caps">
+            <span class="cap-tag">sales_analysis</span>
+            <span class="cap-tag">lead_scoring</span>
+            <span class="cap-tag">forecasting</span>
+          </div>
+        </div>
+
+        <div class="agent-row">
+          <div class="agent-name">FinanceAgent</div>
+          <div class="agent-desc">Financial analysis, cash flow monitoring, budgets, and profitability</div>
+          <div class="agent-caps">
+            <span class="cap-tag">cash_flow</span>
+            <span class="cap-tag">budgets</span>
+            <span class="cap-tag">profitability</span>
+          </div>
+        </div>
+
+        <div class="agent-row">
+          <div class="agent-name">CryptoAgent</div>
+          <div class="agent-desc">Crypto market monitoring, token analysis, and DeFi scanning</div>
+          <div class="agent-caps">
+            <span class="cap-tag">market_monitor</span>
+            <span class="cap-tag">token_analysis</span>
+            <span class="cap-tag">defi_scan</span>
+          </div>
+        </div>
+
+        <div class="agent-row">
+          <div class="agent-name">StrategyAgent</div>
+          <div class="agent-desc">Executive reports, SWOT analysis, and strategic planning</div>
+          <div class="agent-caps">
+            <span class="cap-tag">daily_briefing</span>
+            <span class="cap-tag">swot_analysis</span>
+            <span class="cap-tag">strategic_planning</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Tasks -->
+      <div class="card">
+        <h3>Recent Tasks</h3>
+
+        <div class="task-row">
+          <div class="task-header">
+            <span class="task-name">Analizar tendencias de IA en Latinoamerica</span>
+            <span class="badge completed">completed</span>
+          </div>
+          <div class="task-meta">research &middot; 2340ms</div>
+        </div>
+
+        <div class="task-row">
+          <div class="task-header">
+            <span class="task-name">Market monitor - BTC, ETH, SOL</span>
+            <span class="badge completed">completed</span>
+          </div>
+          <div class="task-meta">crypto &middot; 1820ms</div>
+        </div>
+
+        <div class="task-row">
+          <div class="task-header">
+            <span class="task-name">Supplier search: packaging providers</span>
+            <span class="badge pending">pending</span>
+          </div>
+          <div class="task-meta">supplier &middot; pending</div>
+        </div>
+
+        <div class="task-row">
+          <div class="task-header">
+            <span class="task-name">Daily executive briefing</span>
+            <span class="badge active">active</span>
+          </div>
+          <div class="task-meta">strategy &middot; pending</div>
+        </div>
+
+        <div class="task-row">
+          <div class="task-header">
+            <span class="task-name">Cash flow analysis Q1 2026</span>
+            <span class="badge completed">completed</span>
+          </div>
+          <div class="task-meta">finance &middot; 3100ms</div>
+        </div>
+      </div>
+
+      <!-- Business Opportunities -->
+      <div class="card">
+        <h3>Business Opportunities</h3>
+
+        <div class="opp-row">
+          <div class="opp-title">AI-powered SaaS for LATAM SMBs</div>
+          <div class="opp-desc">Growing demand for affordable AI tools in Latin American small businesses. Market size estimated at $2.4B by 2027.</div>
+          <div class="opp-meta">
+            <span class="opp-potential">Potential: High</span>
+            <span class="opp-risk">Risk: Medium</span>
+            <span class="badge new">new</span>
+          </div>
+        </div>
+
+        <div class="opp-row">
+          <div class="opp-title">DeFi yield aggregation platform</div>
+          <div class="opp-desc">Cross-chain yield optimization with automated rebalancing. TVL opportunity in emerging L2 networks.</div>
+          <div class="opp-meta">
+            <span class="opp-potential">Potential: Very High</span>
+            <span class="opp-risk">Risk: High</span>
+            <span class="badge new">new</span>
+          </div>
+        </div>
+
+        <div class="opp-row">
+          <div class="opp-title">E-commerce logistics optimization</div>
+          <div class="opp-desc">Last-mile delivery costs rising 18% YoY. AI route optimization can reduce costs by 25-30%.</div>
+          <div class="opp-meta">
+            <span class="opp-potential">Potential: Medium</span>
+            <span class="opp-risk">Risk: Low</span>
+            <span class="badge active">active</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- System Status -->
+      <div class="card">
+        <h3>System Status</h3>
+        <div class="stat-grid">
+          <div>
+            <div class="stat-label">Status</div>
+            <div class="stat-value online">ONLINE</div>
+          </div>
+          <div>
+            <div class="stat-label">Agents</div>
+            <div class="stat-value agents">6</div>
+          </div>
+          <div>
+            <div class="stat-label">Tasks Completed</div>
+            <div class="stat-value tasks">5</div>
+          </div>
+          <div>
+            <div class="stat-label">Opportunities</div>
+            <div class="stat-value opps">3</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /grid -->
+  </div><!-- /container -->
+</body>
+</html>
