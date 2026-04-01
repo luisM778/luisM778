@@ -1,7 +1,7 @@
 {
-  "name": "argus",
+  "name": "nexus",
   "version": "1.0.0",
-  "description": "ARGUS - Autonomous Business Intelligence Assistant (Chief-of-Staff Digital)",
+  "description": "NEXUS - Neural Executive System for Unified Strategy (Chief-of-Staff Digital)",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

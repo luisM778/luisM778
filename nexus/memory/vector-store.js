@@ -5,7 +5,7 @@ class VectorStore {
   constructor() {
     this.client = null;
     this.collection = null;
-    this.collectionName = 'argus_memory';
+    this.collectionName = 'nexus_memory';
   }
 
   async connect() {
@@ -16,7 +16,7 @@ class VectorStore {
 
       this.collection = await this.client.getOrCreateCollection({
         name: this.collectionName,
-        metadata: { description: 'ARGUS long-term vector memory' },
+        metadata: { description: 'NEXUS long-term vector memory' },
       });
 
       logger.info(`VectorStore connected: collection "${this.collectionName}"`);

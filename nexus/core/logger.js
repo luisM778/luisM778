@@ -11,7 +11,7 @@ const logger = winston.createLogger({
   ),
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: 'argus.log', maxsize: 10_000_000, maxFiles: 5 }),
+    new winston.transports.File({ filename: 'nexus.log', maxsize: 10_000_000, maxFiles: 5 }),
   ],
 });
 

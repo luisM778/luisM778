@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'ARGUS Dashboard',
-  description: 'Autonomous Business Intelligence Assistant',
+  title: 'NEXUS Dashboard',
+  description: 'Neural Executive System for Unified Strategy',
 };
 
 export default function RootLayout({ children }) {

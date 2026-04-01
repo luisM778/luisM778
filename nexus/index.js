@@ -20,11 +20,11 @@ app.use('/api', apiRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', service: 'argus', timestamp: new Date().toISOString() });
+  res.json({ status: 'ok', service: 'nexus', timestamp: new Date().toISOString() });
 });
 
 async function boot() {
-  logger.info('=== ARGUS Starting ===');
+  logger.info('=== NEXUS Starting ===');
 
   // Initialize orchestrator (connects DB, Redis, agents)
   const orchestrator = new Orchestrator();
@@ -38,12 +38,12 @@ async function boot() {
   scheduler.start();
 
   app.listen(PORT, () => {
-    logger.info(`ARGUS API listening on port ${PORT}`);
+    logger.info(`NEXUS API listening on port ${PORT}`);
     logger.info('System ready. Autonomous loop active.');
   });
 }
 
 boot().catch((err) => {
-  logger.error('Failed to start ARGUS', err);
+  logger.error('Failed to start NEXUS', err);
   process.exit(1);
 });

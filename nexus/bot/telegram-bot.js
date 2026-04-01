@@ -8,7 +8,7 @@ const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
 bot.start((ctx) => {
   ctx.reply(
-    '🤖 *ARGUS - Autonomous Business Assistant*\n\n' +
+    '🤖 *NEXUS - Autonomous Business Assistant*\n\n' +
       'Commands:\n' +
       '/agents - List active agents\n' +
       '/tasks - View recent tasks\n' +
@@ -109,14 +109,14 @@ bot.command('status', async (ctx) => {
   try {
     const healthRes = await axios.get(`http://localhost:${process.env.PORT || 4000}/health`);
     ctx.reply(
-      `✅ *ARGUS Status*\n\n` +
+      `✅ *NEXUS Status*\n\n` +
         `Service: ${healthRes.data.service}\n` +
         `Status: ${healthRes.data.status}\n` +
         `Time: ${healthRes.data.timestamp}`,
       { parse_mode: 'Markdown' }
     );
   } catch (err) {
-    ctx.reply('❌ ARGUS is offline');
+    ctx.reply('❌ NEXUS is offline');
   }
 });
 

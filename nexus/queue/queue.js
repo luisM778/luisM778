@@ -14,8 +14,8 @@ class TaskQueue {
   }
 
   async initialize() {
-    this.queue = new Queue('argus-tasks', { connection });
-    this.events = new QueueEvents('argus-tasks', { connection });
+    this.queue = new Queue('nexus-tasks', { connection });
+    this.events = new QueueEvents('nexus-tasks', { connection });
 
     this.events.on('completed', ({ jobId }) => {
       logger.info(`Task completed: ${jobId}`);
@@ -57,7 +57,7 @@ class TaskQueue {
   }
 
   static createWorker(name, processor) {
-    return new Worker('argus-tasks', processor, {
+    return new Worker('nexus-tasks', processor, {
       connection,
       concurrency: parseInt(process.env.MAX_CONCURRENT_TASKS || '5'),
     });

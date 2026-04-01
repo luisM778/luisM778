@@ -84,7 +84,7 @@ class Orchestrator {
   }
 
   async think(observations) {
-    const prompt = `You are ARGUS, an autonomous business intelligence assistant.
+    const prompt = `You are NEXUS, an autonomous business intelligence assistant.
 Analyze the following observations and identify priorities, risks, and opportunities.
 Respond in JSON with keys: priorities (array), risks (array), opportunities (array), recommended_actions (array).
 

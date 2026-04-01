@@ -16,9 +16,9 @@ class MemoryManager {
 
     // PostgreSQL
     this.sequelize = new Sequelize(
-      process.env.POSTGRES_DB || 'argus',
-      process.env.POSTGRES_USER || 'argus',
-      process.env.POSTGRES_PASSWORD || 'argus_secret_2024',
+      process.env.POSTGRES_DB || 'nexus',
+      process.env.POSTGRES_USER || 'nexus',
+      process.env.POSTGRES_PASSWORD || 'nexus_secret_2024',
       {
         host: process.env.POSTGRES_HOST || 'localhost',
         port: process.env.POSTGRES_PORT || 5432,
@@ -118,11 +118,11 @@ class MemoryManager {
   // --- Short-term memory (Redis) ---
 
   async cacheSet(key, value, ttlSeconds = 3600) {
-    await this.redis.set(`argus:${key}`, JSON.stringify(value), 'EX', ttlSeconds);
+    await this.redis.set(`nexus:${key}`, JSON.stringify(value), 'EX', ttlSeconds);
   }
 
   async cacheGet(key) {
-    const data = await this.redis.get(`argus:${key}`);
+    const data = await this.redis.get(`nexus:${key}`);
     return data ? JSON.parse(data) : null;
   }
 

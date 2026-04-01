@@ -7,7 +7,7 @@ const { logger } = require('../core/logger');
 const browser = new BrowserTool();
 
 const worker = new Worker(
-  'argus-tasks',
+  'nexus-tasks',
   async (job) => {
     if (job.name !== 'browser') return;
 

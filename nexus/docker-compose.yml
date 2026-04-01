@@ -4,24 +4,24 @@ services:
   # ---- Data Layer ----
   postgres:
     image: postgres:16-alpine
-    container_name: argus-postgres
+    container_name: nexus-postgres
     environment:
-      POSTGRES_DB: argus
-      POSTGRES_USER: argus
-      POSTGRES_PASSWORD: argus_secret_2024
+      POSTGRES_DB: nexus
+      POSTGRES_USER: nexus
+      POSTGRES_PASSWORD: nexus_secret_2024
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U argus"]
+      test: ["CMD-SHELL", "pg_isready -U nexus"]
       interval: 5s
       timeout: 5s
       retries: 5
 
   redis:
     image: redis:7-alpine
-    container_name: argus-redis
+    container_name: nexus-redis
     ports:
       - "6379:6379"
     volumes:
@@ -34,7 +34,7 @@ services:
 
   chromadb:
     image: chromadb/chroma:latest
-    container_name: argus-chromadb
+    container_name: nexus-chromadb
     ports:
       - "8000:8000"
     volumes:
@@ -42,9 +42,9 @@ services:
 
   # ---- Application Layer ----
   # NOTE: Ollama runs natively on the host (port 11434). No Docker container needed.
-  argus-api:
+  nexus-api:
     build: .
-    container_name: argus-api
+    container_name: nexus-api
     ports:
       - "4000:4000"
     environment:
@@ -52,9 +52,9 @@ services:
       PORT: 4000
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
-      POSTGRES_DB: argus
-      POSTGRES_USER: argus
-      POSTGRES_PASSWORD: argus_secret_2024
+      POSTGRES_DB: nexus
+      POSTGRES_USER: nexus
+      POSTGRES_PASSWORD: nexus_secret_2024
       REDIS_HOST: redis
       REDIS_PORT: 6379
       OLLAMA_BASE_URL: http://host.docker.internal:11434
@@ -74,7 +74,7 @@ services:
   # Workers run as separate processes
   workers:
     build: .
-    container_name: argus-workers
+    container_name: nexus-workers
     command: node -e "require('./queue/browser-worker'); require('./queue/shell-worker'); require('./queue/api-worker'); setInterval(() => {}, 60000);"
     environment:
       POSTGRES_HOST: postgres
@@ -92,14 +92,14 @@ services:
     build:
       context: ./dashboard
       dockerfile: Dockerfile
-    container_name: argus-dashboard
+    container_name: nexus-dashboard
     ports:
       - "4001:4001"
     environment:
-      NEXT_PUBLIC_API_URL: http://argus-api:4000/api
+      NEXT_PUBLIC_API_URL: http://nexus-api:4000/api
       PORT: 4001
     depends_on:
-      - argus-api
+      - nexus-api
 
 volumes:
   pgdata:

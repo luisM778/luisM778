@@ -103,9 +103,9 @@ export default function Dashboard() {
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32 }}>
         <div>
           <h1 style={{ margin: 0, fontSize: 32, background: 'linear-gradient(135deg, #7c8cf8, #6ee7b7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            ARGUS
+            NEXUS
           </h1>
-          <p style={{ margin: '4px 0 0', color: '#888', fontSize: 14 }}>Autonomous Business Intelligence Assistant</p>
+          <p style={{ margin: '4px 0 0', color: '#888', fontSize: 14 }}>Neural Executive System for Unified Strategy</p>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <span style={{

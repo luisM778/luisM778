@@ -1,7 +1,7 @@
 const { logger } = require('../core/logger');
 
 /**
- * BaseAgent – abstract class for all ARGUS agents.
+ * BaseAgent – abstract class for all NEXUS agents.
  * Every agent follows the pattern: analyze → decide → execute → report
  */
 class BaseAgent {

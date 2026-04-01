@@ -9,7 +9,7 @@ class Planner {
   async createPlan(analysis, agents) {
     const agentNames = Object.keys(agents);
 
-    const prompt = `You are ARGUS Planner. Create an execution plan based on this analysis.
+    const prompt = `You are NEXUS Planner. Create an execution plan based on this analysis.
 Available agents: ${agentNames.join(', ')}
 
 Analysis:

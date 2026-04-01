@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * ARGUS Setup Script
+ * NEXUS Setup Script
  * Pulls required Ollama models and verifies services.
  */
 const axios = require('axios');
@@ -34,7 +34,7 @@ async function checkService(name, url) {
 }
 
 async function main() {
-  console.log('=== ARGUS Setup ===\n');
+  console.log('=== NEXUS Setup ===\n');
 
   console.log('Checking services...');
   await checkService('Ollama', OLLAMA_URL);

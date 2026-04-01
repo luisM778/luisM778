@@ -1,6 +1,6 @@
-# ARGUS - Autonomous Business Intelligence Assistant
+# NEXUS - Autonomous Business Intelligence Assistant
 
-ARGUS is a multi-agent autonomous system that operates as a **Chief-of-Staff digital**. It researches business opportunities, analyzes markets, automates operational tasks, monitors finances, and coordinates specialized AI agents — all running locally with Ollama.
+NEXUS is a multi-agent autonomous system that operates as a **Chief-of-Staff digital**. It researches business opportunities, analyzes markets, automates operational tasks, monitors finances, and coordinates specialized AI agents — all running locally with Ollama.
 
 ## Architecture
 
@@ -35,7 +35,7 @@ ARGUS is a multi-agent autonomous system that operates as a **Chief-of-Staff dig
 
 ## Autonomy Loop
 
-ARGUS runs an autonomous cycle: **Observe → Think → Plan → Act → Evaluate → Learn**
+NEXUS runs an autonomous cycle: **Observe → Think → Plan → Act → Evaluate → Learn**
 
 Scheduled tasks:
 - **Every 30 min** — Market monitoring
@@ -47,7 +47,7 @@ Scheduled tasks:
 
 ```bash
 # 1. Clone and enter the project
-cd argus
+cd nexus
 
 # 2. Copy environment file
 cp .env.example .env
@@ -57,8 +57,8 @@ cp .env.example .env
 docker compose up -d
 
 # 4. Pull AI models (run once)
-docker exec argus-ollama ollama pull llama3.1
-docker exec argus-ollama ollama pull nomic-embed-text
+docker exec nexus-ollama ollama pull llama3.1
+docker exec nexus-ollama ollama pull nomic-embed-text
 
 # 5. Verify
 curl http://localhost:4000/health
@@ -81,7 +81,7 @@ Services will be available at:
 
 ```bash
 # 1. Install dependencies
-cd argus && npm install
+cd nexus && npm install
 cd dashboard && npm install && cd ..
 
 # 2. Start infrastructure
@@ -193,7 +193,7 @@ Commands:
 ## Project Structure
 
 ```
-argus/
+nexus/
 ├── index.js                 # Entry point
 ├── core/
 │   ├── orchestrator.js      # Agent coordinator & autonomy loop

@@ -7,7 +7,7 @@ const { logger } = require('../core/logger');
 const shell = new ShellTool();
 
 const worker = new Worker(
-  'argus-tasks',
+  'nexus-tasks',
   async (job) => {
     if (job.name !== 'shell') return;
 

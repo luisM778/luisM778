@@ -5,7 +5,7 @@ const axios = require('axios');
 const { logger } = require('../core/logger');
 
 const worker = new Worker(
-  'argus-tasks',
+  'nexus-tasks',
   async (job) => {
     if (job.name !== 'api') return;
 
